@@ -1,0 +1,12 @@
+{
+	"require":{
+		"components/jquery":"~2"
+	},
+	"name": "itlife/ascroll",
+	"description": "Animate anchor scroll",
+	"license": "GPL3",
+	"authors": [{
+		"name": "itlife",
+		"email": "info@itlife-studio.ru"
+	}]
+}

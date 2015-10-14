@@ -1,0 +1,5 @@
+{
+	"ascroll":{
+		"require":"*ascroll/infra.php"
+	}
+}
