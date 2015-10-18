@@ -1,7 +1,7 @@
 $(function(){
 	$('.ascroll').click(function () {
-		var mark=$(this).attr('href');
-		mark=mark.split('#',2);
+		var href=$(this).attr('href');
+		mark=href.split('#',2);
 		mark=mark[1];
 		if (mark) {
 			var el=$('#'+mark);
@@ -17,7 +17,7 @@ $(function(){
 		} else {
 			top=0;
 		}
-		
+		window.history.pushState(null, null, href);
 		$('html, body').animate({
 			scrollTop:top
 		}, 'slow');
