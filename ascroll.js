@@ -1,4 +1,11 @@
 $(function(){
+	$('a').each(function(){
+		var href=$(this).attr('href');
+		if(!href)return;
+		mark=href.split('#',2);		
+		if (mark.length<2) return;
+		$(this).addClass('ascroll');
+	})
 	$('.ascroll').click(function () {
 		var href=$(this).attr('href');
 		mark=href.split('#',2);
