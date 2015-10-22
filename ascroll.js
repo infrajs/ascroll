@@ -1,12 +1,12 @@
-$(function(){
+window.ascroll=function(){
 	$('a').each(function(){
 		var href=$(this).attr('href');
 		if(!href)return;
-		mark=href.split('#',2);		
-		if (mark.length<2) return;
+		mark=href.split('#',2);
+		if(!mark[1])return;
 		$(this).addClass('ascroll');
 	})
-	$('.ascroll').click(function () {
+	$('.ascroll').not('[ascrolled]').attr('ascrolled',true).click(function () {
 		var href=$(this).attr('href');
 		mark=href.split('#',2);
 		mark=mark[1];
@@ -28,7 +28,6 @@ $(function(){
 		$('html, body').animate({
 			scrollTop:top
 		}, 'slow');
-		
 		return false;
 	});
-});
+}
