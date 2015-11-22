@@ -1,5 +1,13 @@
 {
 	"ascroll":{
-		"require":"*ascroll/infra.php"
+		"pub":["fixed","margin","global"],
+		"require":"*ascroll/infra.php",
+
+		"ascroll":true,
+		"fixed":100,
+		"anchor":0,
+		"div":"body",
+		"margin":".space",
+		"global":true
 	}
 }

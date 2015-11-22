@@ -1,3 +1,4 @@
-infra.handle(infrajs,'onshow',function(){
-	ascroll();	
+infra.listen(infrajs, 'onshow', function () {
+	var conf = infra.config();
+	ascroll(conf.ascroll);	
 });
