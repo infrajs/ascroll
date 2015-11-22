@@ -21,7 +21,7 @@ Animate link click anchor scroll
 
 # use any time
 ```javascript
-	ascrol.go('#anchor');
-	ascrol.go('#anchor', config);
-	ascrol.go(100, config);
+	ascroll.go('#anchor');
+	ascroll.go('#anchor', config);
+	ascroll.go(100, config);
 ```
