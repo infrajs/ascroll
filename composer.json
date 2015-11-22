@@ -3,7 +3,7 @@
 		"components/jquery":"~2"
 	},
 	"name": "itlife/ascroll",
-	"description": "Animate anchor scroll",
+	"description": "Animate link click scroll anchor",
 	"license": "GPL3",
 	"authors": [{
 		"name": "itlife",

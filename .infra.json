@@ -3,11 +3,12 @@
 		"pub":["fixed","margin","global"],
 		"require":"*ascroll/infra.php",
 
-		"ascroll":true,
-		"fixed":100,
-		"anchor":0,
-		"div":"body",
-		"margin":".space",
-		"global":true
+		"ascroll":true, //Автозапуск в infrajs
+
+		"anchor":0, //anchor-блок по умолчанию, до которого нужно проскролить или цифра отступ от вергей границы браузера
+		"height":100, //Сселектор fixed-шапки, высоту которой надо компенсировать или цифра высота
+		"marginBottom":".space", //Отступ от fixed-шапки, может быть селектором блока с marginBottom
+		"div":"body", //Контейнер с ссылками, которые должны плавно скролиться
+		"global":true //Нужно ли применять скролл для обычных ссылок (для AJAX сайтов)
 	}
 }

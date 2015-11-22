@@ -1,13 +1,6 @@
 window.ascroll=function(conf){
-	if(!conf)conf={};
 
-	conf=$.extend({},{
-		div:'body',
-		fixed:'.navbar-fixed-top',
-		anchor:0, //Якорь по умолчанию
-		margin:'.space',
-		global:false //false - применяется только к #anchor ссылкам на текущую страницу, true - применяется ко всем ссылкам, скролл будет наверх браузера или согласно параметров указанных в атрибутах.
-	},conf);
+	conf = $.extend(ascroll.conf, conf);
 
 	var div=$(conf.div);
 
@@ -32,10 +25,7 @@ window.ascroll=function(conf){
 			$(this).addClass('ascroll');
 		});
 	}
-
-	
 	a.filter('.ascroll').attr('data-ascroll',true).click(function (event) {
-		console.log('ascroll');
 		var href = $(this).attr('href');
 		anchor = href.split('#', 2); //Якорь из ссылки
 		anchor = anchor[1];
@@ -49,46 +39,59 @@ window.ascroll=function(conf){
 				anchor='#'+anchor;
 			}
 		}
-
-		if (!anchor) {
-			anchor=conf.anchor; //Якорь по умолчанию
-		}
-
-
-		if (typeof(anchor)=='string') {
-			var el = $(anchor);
-			if (!el.length) return;
-			var top = el.offset().top;
-		} else if (typeof(anchor)=='number') {
-			var top=anchor;
-		} else {
-			top = 0;
-		}
-		var fixed=0;
-		if (typeof(conf.fixed) == 'string') {
-			fixed = $(conf.fixed).height();
-		} else if (typeof(conf.fixed) == 'number') {
-			fixed = conf.fixed;
-		}
-
-		
-		var margin = 20;
-		if (typeof(conf.margin) == 'string') {
-			margin = parseInt($(conf.margin).css('margin-bottom'));
-		} if (typeof(conf.margin) == 'number') {
-			margin = conf.margin;
-		}
-		fixed = fixed + margin;
-		if (top > fixed) top = top - fixed;
-		
-		var prevented=event.isDefaultPrevented();
-		if (!prevented) event.preventDefault();
-		if(!prevented&&anchor) {
+		ascroll.go(anchor, conf);
+		if (!event.isDefaultPrevented()) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю
+			event.preventDefault(); 
 			window.history.pushState(null, null, href);
 		}
-		$('html, body').animate({
-			scrollTop:top
-		}, 'slow');
-		
 	});
+}
+window.ascroll.conf={
+	height: '.navbar-fixed-top',
+	anchor: 0, //Якорь по умолчанию
+	marginBottom: '.space',
+	div:'body',
+	global:false //false - применяется только к #anchor ссылкам на текущую страницу, true - применяется ко всем ссылкам, скролл будет наверх браузера или согласно параметров указанных в атрибутах.
+}
+/**
+ * 
+ *
+ *
+ **/
+window.ascroll.go = function (anchor, conf) {
+	conf = $.extend({}, ascroll.conf, conf);
+
+	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
+
+
+	if (typeof(anchor)=='string') {
+		var el = $(anchor);
+		if (!el.length) return;
+		var top = el.offset().top;
+	} else if (typeof(anchor)=='number') {
+		var top=anchor;
+	} else {
+		top = 0;
+	}
+
+	var height=0;
+	if (typeof(conf.height) == 'string' && $(conf.height).lenght) {
+		height = $(conf.height).height();
+	} else if (typeof(conf.height) == 'number') {
+		height = conf.height;
+	}
+	
+	var marginBottom = 20;
+	if (typeof(conf.marginBottom) == 'string' && $(conf.marginBottom).lenght) {
+		marginBottom = parseInt($(conf.marginBottom).css('margin-bottom'));
+	} if (typeof(conf.marginBottom) == 'number') {
+		marginBottom = conf.marginBottom;
+	}
+	height = height + marginBottom;
+	
+	if (top > height) top = top - height;
+	
+	$('html, body').animate({
+		scrollTop:top
+	}, 'slow');
 }
