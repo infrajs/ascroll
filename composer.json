@@ -4,9 +4,5 @@
 	},
 	"name": "itlife/ascroll",
 	"description": "Animate link click scroll anchor",
-	"license": "GPL3",
-	"authors": [{
-		"name": "itlife",
-		"email": "info@itlife-studio.ru"
-	}]
+	"license": "GPL3"
 }
