@@ -3,7 +3,7 @@ Animate link click anchor scroll
 # use
 ```html
 <script src="vendor/components/jquery/jquery.min.js"></script>
-<script src="vendor/itlife/ascroll/ascroll.js"></script>
+<script src="vendor/infrajs/ascroll/ascroll.js"></script>
 ```
 ```javascript
 <script>
