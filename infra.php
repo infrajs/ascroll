@@ -1,5 +1,5 @@
 <?php
-namespace itlife\ascroll;
+namespace infrajs\ascroll;
 global $infra;
 infra_when($infra,'oninitjs', function () {
 	global $infra;
