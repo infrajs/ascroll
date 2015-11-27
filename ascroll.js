@@ -27,6 +27,9 @@ window.ascroll=function(conf){
 	}
 	a.filter('.ascroll').attr('data-ascroll',true).click(function (event) {
 		var href = $(this).attr('href');
+		
+		if (!infra.Crumb.isInternal(href)) return;
+
 		anchor = href.split('#', 2); //Якорь из ссылки
 		anchor = anchor[1];
 		if (!anchor) {
