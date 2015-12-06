@@ -1,10 +1,12 @@
 <?php
 namespace infrajs\ascroll;
-global $infra;
-infra_when($infra,'oninitjs', function () {
-	global $infra;
-	$conf=infra_config();
-	if (!$conf['ascroll']['ascroll']) return;
-	$infra['js'] .= $infra['require']('*ascroll/ascroll.js');
-	$infra['js'] .= $infra['require']('*ascroll/infra.js');
+use infrajs\event\Event;
+use infrajs\view\View;
+use infrajs\infra\Config;
+
+$conf=Config::get('ascroll');
+if (!$conf['ascroll']) return;
+Event::wheng('onjs', function () {	
+	View::js('*ascroll/ascroll.js');
+	View::js('*ascroll/infra.js');
 });
