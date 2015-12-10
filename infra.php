@@ -6,7 +6,7 @@ use infrajs\infra\Config;
 
 $conf=Infra::config('ascroll');
 if (!$conf['ascroll']) return;
-Event::wheng('onjs', function () {	
+Event::handler('onjs', function () {	
 	View::js('*ascroll/ascroll.js');
 	View::js('*ascroll/infra.js');
 });
