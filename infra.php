@@ -2,7 +2,7 @@
 namespace infrajs\ascroll;
 use infrajs\event\Event;
 use infrajs\view\View;
-use infrajs\infra\Config;
+use infrajs\infra\Infra;
 
 $conf=Infra::config('ascroll');
 if (!$conf['ascroll']) return;
