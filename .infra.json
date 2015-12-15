@@ -1,7 +1,7 @@
 {
 	"ascroll":{
 		"pub":["fixed","margin","global"],
-		"require":"*ascroll/infra.php",
+		"require":"-ascroll/infra.php",
 
 		"ascroll":true, //Автозапуск в infrajs
 

@@ -6,6 +6,6 @@ use infrajs\infra\Infra;
 
 
 Event::handler('onjs', function () {	
-	View::js('*ascroll/ascroll.js');
-	View::js('*ascroll/infra.js');
+	View::js('-ascroll/ascroll.js');
+	View::js('-ascroll/infra.js');
 });
