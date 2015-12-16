@@ -28,7 +28,7 @@ window.ascroll=function(conf){
 	a.filter('.ascroll').attr('data-ascroll',true).click(function (event) {
 		var href = $(this).attr('href');
 		
-		if (!infra.Crumb.isInternal(href)) return;
+		if (window.infra&&!infra.Crumb.isInternal(href)) return;
 
 		anchor = href.split('#', 2); //Якорь из ссылки
 		anchor = anchor[1];
@@ -78,22 +78,25 @@ window.ascroll.go = function (anchor, conf) {
 	}
 
 	var height=0;
-	if (typeof(conf.height) == 'string' && $(conf.height).lenght) {
+
+	if (typeof(conf.height) == 'string' && $(conf.height).length) {
 		height = $(conf.height).height();
 	} else if (typeof(conf.height) == 'number') {
 		height = conf.height;
 	}
 	
 	var marginBottom = 20;
-	if (typeof(conf.marginBottom) == 'string' && $(conf.marginBottom).lenght) {
+	if (typeof(conf.marginBottom) == 'string' && $(conf.marginBottom).length) {
 		marginBottom = parseInt($(conf.marginBottom).css('margin-bottom'));
 	} if (typeof(conf.marginBottom) == 'number') {
 		marginBottom = conf.marginBottom;
 	}
+
 	height = height + marginBottom;
 	
 	if (top > height) top = top - height;
-	
+	else top = 0;
+
 	$('html, body').animate({
 		scrollTop:top
 	}, 'slow');
