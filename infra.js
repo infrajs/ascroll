@@ -1,14 +1,14 @@
-define('?-ascroll/infra.js', ['?-event/event.js'], function (Event) {
-	infra.listen(infrajs, 'onshow', function () {
+(function(){
+	Event.handler('Infrajs.onshow', function () {
 		var conf = infra.config();
 		ascroll(conf.ascroll);
 	});
 
-	infra.listen(infra.Crumb, 'onchange', function () {// это native click Crumb, после jquery click ascroll
+	Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 		
 		if (infra.Crumb.popstate) return; //back forward
 		if (infra.Crumb.a) return; //link click
 
 		ascroll.go(location.hash);
 	});
-});
+})();
