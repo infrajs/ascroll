@@ -1,9 +1,9 @@
 {
-	"pub":["fixed","margin","global"],
+	"pub":["anchor","height","marginBottom","global"],
 	"require":"infra.php",
 	"js":["ascroll.js","infra.js"],
 	"ascroll":true, //Автозапуск в infrajs
-	"dependencies":["event","controller"],
+	"dependencies":"event",
 	"anchor":0, //anchor-блок по умолчанию, до которого нужно проскролить или цифра отступ от вергей границы браузера
 	"height":100, //Сселектор fixed-шапки, высоту которой надо компенсировать или цифра высота
 	"marginBottom":".space", //Отступ от fixed-шапки, может быть селектором блока с marginBottom
