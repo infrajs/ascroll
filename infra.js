@@ -4,11 +4,12 @@
 		ascroll(conf.ascroll);
 	});
 
+	
 	Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
-		
+		//Нажимаем на ссылку, но infrajs.onshow не происходит. Ссылка с якорем
 		if (infra.Crumb.popstate) return; //back forward
 		if (infra.Crumb.a) return; //link click
-
 		ascroll.go(location.hash);
 	});
+	
 })();
