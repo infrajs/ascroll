@@ -5,8 +5,7 @@ window.ascroll=function(conf){
 	var div=$(conf.div);
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-ascroll=false
-	var a=div.find('a').not('.ascroll').not('[data-ascroll=false]');
-
+	var a=div.find('a:not(.ascroll,[data-ascroll=false])');
 	//Так как многие плагины используют # такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
 		a.each(function(){
@@ -27,7 +26,7 @@ window.ascroll=function(conf){
 	}
 	a.filter('.ascroll').attr('data-ascroll',true).click(function (event) {
 		var href = $(this).attr('href');
-		
+		console.log('ascroll click');
 		if (window.infra&&!infra.Crumb.isInternal(href)) return;
 
 		anchor = href.split('#', 2); //Якорь из ссылки
