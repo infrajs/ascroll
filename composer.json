@@ -3,6 +3,6 @@
 	"description": "Animate link click scroll anchor",
 	"license": "GPL3",
 	"require":{
-		"components/jquery":"~2"
+		"components/jquery":"2.1.4"
 	}
 }

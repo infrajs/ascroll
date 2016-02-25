@@ -5,7 +5,7 @@ window.ascroll=function(conf){
 	var div=$(conf.div);
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-ascroll=false
-	var a=div.find('a:not(.ascroll,[data-ascroll=false])');
+	var a=div.find('a:not(.ascroll):not([data-ascroll=false])');
 	//Так как многие плагины используют # такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
 		a.each(function(){
