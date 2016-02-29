@@ -6,7 +6,7 @@ window.ascroll=function(conf){
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-ascroll=false
 	var a=div.find('a:not(.ascroll):not([data-ascroll=false])');
-	//Так как многие плагины используют # такую ссылку в технологических целях... такие ссылки игнорируются
+	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
 		a.each(function(){
 			var href=$(this).attr('href');
@@ -72,6 +72,7 @@ window.ascroll.go = function (anchor, conf) {
 	if (typeof(anchor)=='string') {
 		var el = $(anchor);
 		if (!el.length) return;
+		if (!el.is(':visible')) el=el.parents(':visible:first');
 		var top = el.offset().top;
 	} else if (typeof(anchor)=='number') {
 		var top=anchor;
