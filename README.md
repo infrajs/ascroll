@@ -1,5 +1,6 @@
 # ascroll
 Animate link click anchor scroll
+Плавная прокрутка при клике по внутренним ajax ссылкам и по якорям.
 # use
 ```html
 <script src="vendor/components/jquery/jquery.min.js"></script>
@@ -24,4 +25,14 @@ Animate link click anchor scroll
 	ascroll.go('#anchor');
 	ascroll.go('#anchor', config);
 	ascroll.go(100, config);
+	ascroll.once = false; //Пропустить один следующий вызов ascroll.go
+```
+# Игнорировать ссылку
+```html
+<a data-ascroll="false" ...>
+```
+
+# Прокрутка до определённого элемента
+```html
+<a data-anchor=".breadcrumb" ...>
 ```

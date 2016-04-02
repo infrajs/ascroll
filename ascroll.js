@@ -1,7 +1,6 @@
 window.ascroll=function(conf){
 
 	conf = $.extend(ascroll.conf, conf);
-
 	var div=$(conf.div);
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-ascroll=false
@@ -51,6 +50,7 @@ window.ascroll=function(conf){
 		});
 	});
 }
+window.ascroll.once;
 window.ascroll.conf={
 	height: '.navbar-fixed-top',
 	anchor: 0, //Якорь по умолчанию
@@ -65,7 +65,11 @@ window.ascroll.conf={
  **/
 window.ascroll.go = function (anchor, conf) {
 	conf = $.extend({}, ascroll.conf, conf);
-
+	if (typeof(window.ascroll.once) != 'undefined') {
+		conf['anchor'] = window.ascroll.once;
+		delete window.ascroll.once;
+		if (conf['anchor'] === false) return;
+	}
 	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
 
 
