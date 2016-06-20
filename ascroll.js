@@ -28,20 +28,23 @@ window.ascroll=function(conf){
 
 		$(this).attr('data-ascroll',true).click(function (event) {
 			var href = $(this).attr('href');
-			if (window.infra&&!infra.Crumb.isInternal(href)) return;
+			if (window.Crumb&&!Crumb.isInternal(href)) return;
 
-			anchor = href.split('#', 2); //Якорь из ссылки
-			anchor = anchor[1];
+			var anchor=$(this).data('anchor'); //Якорь из атрибута
+			
 			if (!anchor) {
-				anchor=$(this).data('anchor'); //Якорь из атрибута
-			} else {
-				var nanchor=Number(anchor);
-				if(nanchor==anchor){
-					anchor=nanchor;
-				} else {
-					anchor='#'+anchor;
+				anchor = href.split('#', 2); //Якорь из ссылки
+				anchor = anchor[1];
+				if (anchor) {
+					var nanchor=Number(anchor);
+					if(nanchor==anchor){
+						anchor=nanchor;
+					} else {
+						anchor='#'+anchor;
+					}
 				}
 			}
+			
 			ascroll.go(anchor, conf);
 			if (!event.isDefaultPrevented()) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю
 				event.preventDefault(); 
