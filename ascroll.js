@@ -111,3 +111,5 @@ window.ascroll.go = function (anchor, conf) {
 		scrollTop:top
 	}, 'slow');
 }
+
+window.Ascroll=window.ascroll;
