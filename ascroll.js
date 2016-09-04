@@ -27,10 +27,14 @@ window.ascroll=function(conf){
 		if (!$(this).hasClass('ascroll')) return;
 
 		$(this).attr('data-ascroll',true).click(function (event) {
-			var href = $(this).attr('href');
+			var a = this;
+			var href = $(a).attr('href');
 			if (window.Crumb&&!Crumb.isInternal(href)) return;
-
-			var anchor=$(this).data('anchor'); //Якорь из атрибута
+			var is = a.getAttribute('infra');
+			if (is ==  'false') return;
+			var is = a.getAttribute('data-crumb');
+			if (is == 'false') return;
+			var anchor=$(a).data('anchor'); //Якорь из атрибута
 			
 			if (!anchor) {
 				anchor = href.split('#', 2); //Якорь из ссылки
