@@ -70,7 +70,7 @@ window.ascroll.conf={
  *
  *
  **/
-window.ascroll.go = function (anchor, conf) {
+window.ascroll.go = function (anchor, conf, cb) {
 	conf = $.extend({}, ascroll.conf, conf);
 	if (typeof(window.ascroll.once) != 'undefined') {
 		conf['anchor'] = window.ascroll.once;
@@ -113,7 +113,10 @@ window.ascroll.go = function (anchor, conf) {
 
 	$('html, body').animate({
 		scrollTop:top
-	}, 'slow');
+	}, {
+		"duration":"slow",
+		"complete":cb
+	});
 }
 
 window.Ascroll=window.ascroll;
