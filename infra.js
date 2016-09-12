@@ -1,5 +1,5 @@
 (function(){
-	Event.handler('Infrajs.onshow', function () {
+	Event.handler('Controller.onshow', function () {
 		var conf = infra.config('ascroll');
 		ascroll(conf);
 	});
