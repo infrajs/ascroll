@@ -26,7 +26,8 @@ window.ascroll=function(conf){
 	a.each(function(){
 		if (!$(this).hasClass('ascroll')) return;
 
-		$(this).attr('data-ascroll',true).click(function (event) {
+		$(this).attr('data-ascroll',true);//.click(function (event) {
+		this.addEventListener('click', function(event) {
 			var a = this;
 			var href = $(a).attr('href');
 			if (window.Crumb&&!Crumb.isInternal(href)) return;
@@ -48,9 +49,8 @@ window.ascroll=function(conf){
 					}
 				}
 			}
-			
 			ascroll.go(anchor, conf);
-			if (!event.isDefaultPrevented()) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю
+			if (!event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю
 				event.preventDefault(); 
 				window.history.pushState(null, null, href);
 			}
