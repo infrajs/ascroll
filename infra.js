@@ -13,7 +13,10 @@
 			ascroll.once = infra.scroll;
 			delete infra.scroll;
 		}
-		ascroll.go(location.hash);
+		//ascroll.go(location.hash);
+		setTimeout( function () {
+			ascroll.go(location.hash);
+		}, 250);
 	});
 	
 })();

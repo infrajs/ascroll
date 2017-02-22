@@ -28,29 +28,41 @@ window.ascroll=function(conf){
 
 		$(this).attr('data-ascroll',true);//.click(function (event) {
 		this.addEventListener('click', function(event) {
+
 			var a = this;
 			var href = $(a).attr('href');
+
 			if (window.Crumb&&!Crumb.isInternal(href)) return;
+
 			var is = a.getAttribute('infra');
 			if (is ==  'false') return;
 			var is = a.getAttribute('data-crumb');
+
 			if (is == 'false') return;
+
+
 			var anchor=$(a).data('anchor'); //Якорь из атрибута
 			
 			if (!anchor) {
 				anchor = href.split('#', 2); //Якорь из ссылки
 				anchor = anchor[1];
 				if (anchor) {
+					href = href[0];
 					var nanchor=Number(anchor);
 					if(nanchor==anchor){
 						anchor=nanchor;
 					} else {
 						anchor='#'+anchor;
 					}
+				} else {
+					href = false;
 				}
+			} else {
+				href = false;
 			}
-			ascroll.go(anchor, conf);
-			if (!event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю
+			
+			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
+				ascroll.go(anchor, conf);
 				event.preventDefault(); 
 				window.history.pushState(null, null, href);
 			}
@@ -90,7 +102,6 @@ window.ascroll.go = function (anchor, conf, cb) {
 	} else {
 		top = 0;
 	}
-
 	var height=0;
 
 	if (typeof(conf.height) == 'string' && $(conf.height).length) {
