@@ -60,9 +60,8 @@ window.ascroll=function(conf){
 			} else {
 				href = false;
 			}
-			
+			ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
 			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
-				ascroll.go(anchor, conf);
 				event.preventDefault(); 
 				window.history.pushState(null, null, href);
 			}
