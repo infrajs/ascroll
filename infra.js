@@ -16,7 +16,7 @@
 		//ascroll.go(location.hash);
 		setTimeout( function () {
 			ascroll.go(location.hash);
-		}, 250);
+		}, 300);
 	});
 	
 })();
