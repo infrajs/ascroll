@@ -3,7 +3,7 @@
 	"require":"infra.php",
 	"js":["Ascroll.js","infra.js"],
 	"ascroll":true,
-	"dependencies":["event","controller"],
+	"dependencies":["config","event","controller"],
 	"anchor":0,
 	"height":0,
 	"marginBottom":".space",

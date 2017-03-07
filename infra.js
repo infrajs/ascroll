@@ -1,7 +1,7 @@
 (function(){
 	Event.handler('Controller.onshow', function () {
-		var conf = infra.config('ascroll');
-		ascroll(conf);
+		var conf = Config.get('ascroll');
+		Ascroll(conf);
 	});
 
 	
@@ -10,13 +10,11 @@
 		if (infra.Crumb.popstate) return; //back forward
 		if (infra.Crumb.a&&!location.hash) return; //link click
 		if (typeof(infra.scroll) !== 'undefined') {
-			ascroll.once = infra.scroll;
+			Ascroll.once = infra.scroll;
 			delete infra.scroll;
 		}
-		//ascroll.go(location.hash);
-		setTimeout( function () {
-			ascroll.go(location.hash);
-		}, 300);
+		Ascroll.go(location.hash);
+		
 	});
 	
 })();

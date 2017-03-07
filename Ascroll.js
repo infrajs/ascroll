@@ -1,4 +1,4 @@
-window.ascroll=function(conf){
+window.ascroll = function(conf){
 
 	conf = $.extend(ascroll.conf, conf);
 	var div=$(conf.div);
@@ -89,13 +89,24 @@ window.ascroll.go = function (anchor, conf, cb) {
 		if (conf['anchor'] === false) return;
 	}
 	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
-
+	
+	var options = {
+		"duration":"slow",
+		"complete":cb
+	}
 
 	if (typeof(anchor)=='string') {
 		var el = $(anchor);
 		if (!el.length) return;
 		if (!el.is(':visible')) el=el.parents(':visible:first');
 		var top = el.offset().top;
+		options["step"] = function (now, fx) {
+			if (!el.is(':visible')) el=el.parents(':visible:first');
+			var top = el.offset().top;
+			if (top > height) top = top - height;
+			else top = 0;
+			fx.end = top;
+		}
 	} else if (typeof(anchor)=='number') {
 		var top=anchor;
 	} else {
@@ -121,12 +132,14 @@ window.ascroll.go = function (anchor, conf, cb) {
 	if (top > height) top = top - height;
 	else top = 0;
 
+	
+	
+	
+
+
 	$('html, body').animate({
 		scrollTop:top
-	}, {
-		"duration":"slow",
-		"complete":cb
-	});
+	}, options);
 }
 
 window.Ascroll=window.ascroll;
