@@ -7,8 +7,8 @@
 	
 	Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 		//Нажимаем на ссылку, но infrajs.onshow не происходит. Ссылка с якорем
-		if (infra.Crumb.popstate) return; //back forward
-		if (infra.Crumb.a&&!location.hash) return; //link click
+		if (Crumb.popstate) return; //back forward
+		if (Crumb.a&&!location.hash) return; //link click
 		if (typeof(infra.scroll) !== 'undefined') {
 			Ascroll.once = infra.scroll;
 			delete infra.scroll;
