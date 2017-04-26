@@ -137,9 +137,16 @@ window.ascroll.go = function (anchor, conf, cb) {
 	
 
 
-	$('body').animate({
-		scrollTop:top
-	}, options);
+	
+	if (document.documentElement && document.documentElement.scrollTop) {
+		$('html').animate({
+			scrollTop:top
+		}, options);
+	} else {
+		$('body').animate({
+			scrollTop:top
+		}, options);
+	}
 }
 
 window.Ascroll=window.ascroll;
