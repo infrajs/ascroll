@@ -72,6 +72,8 @@ window.ascroll.once;
 window.ascroll.conf={
 	height: '.navbar-fixed-top',
 	anchor: 0, //Якорь по умолчанию
+	duration:"slow",
+	easing:"swing",
 	marginBottom: '.space',
 	div:'body',
 	global:false //false - применяется только к #anchor ссылкам на текущую страницу, true - применяется ко всем ссылкам, скролл будет наверх браузера или согласно параметров указанных в атрибутах.
@@ -81,7 +83,7 @@ window.ascroll.conf={
  *
  *
  **/
-window.ascroll.go = function (anchor, conf, cb) {
+window.ascroll.go = function (anchor, conf, cb, flash) {
 	conf = $.extend({}, ascroll.conf, conf);
 	if (typeof(window.ascroll.once) != 'undefined') {
 		conf['anchor'] = window.ascroll.once;
@@ -89,28 +91,32 @@ window.ascroll.go = function (anchor, conf, cb) {
 		if (conf['anchor'] === false) return;
 	}
 	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
-	
+
 	var options = {
-		"duration":"slow",
+		"duration":conf.duration,
+		"easing":conf.easing,
 		"complete":cb
 	}
 
 	if (typeof(anchor)=='string') {
 		var el = $(anchor);
-		if (!el.length) return;
-		if (!el.is(':visible')) el=el.parents(':visible:first');
-		var top = el.offset().top;
-		options["step"] = function (now, fx) {
+		if (el.length) {
 			if (!el.is(':visible')) el=el.parents(':visible:first');
 			var top = el.offset().top;
-			if (top > height) top = top - height;
-			else top = 0;
-			fx.end = top;
+			options["step"] = function (now, fx) {
+				if (!el.is(':visible')) el=el.parents(':visible:first');
+				var top = el.offset().top;
+				if (top > height) top = top - height;
+				else top = 0;
+				fx.end = top;
+			}
+		} else {
+			var top = 0;
 		}
 	} else if (typeof(anchor)=='number') {
 		var top=anchor;
 	} else {
-		top = 0;
+		var top = 0;
 	}
 	var height=0;
 
