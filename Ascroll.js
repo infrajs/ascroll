@@ -140,19 +140,23 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 
 	
 	
-	
+
 
 
 	
 	if (document.documentElement && document.documentElement.scrollTop) {
-		$('html').animate({
-			scrollTop:top
-		}, options);
+		var container = $('html');
 	} else {
-		$('body').animate({
-			scrollTop:top
-		}, options);
+		var container = $('body');
 	}
+	
+	var delta = top - container.scrollTop();
+	if (conf.fastScrollUp && delta < -200) {
+		container.scrollTop(top+200);
+	}
+	container.animate({
+		scrollTop:top
+	}, options);
 }
 
-window.Ascroll=window.ascroll;
+window.Ascroll = window.ascroll;

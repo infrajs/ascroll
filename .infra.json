@@ -1,10 +1,11 @@
 {
-	"pub":["anchor","height","marginBottom","global","flash","easing","duration"],
+	"pub":["anchor","height","marginBottom","global","flash","easing","duration","fastScrollUp"],
 	"require":"infra.php",
 	"easing":"swing",
-	"duration":1000,
+	"duration":800,
 	"js":["Ascroll.js","infra.js"],
 	"ascroll":true,
+	"fastScrollUp":true,
 	"dependencies":["config","event","controller"],
 	"anchor":0,
 	"height":0,
