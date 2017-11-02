@@ -84,7 +84,7 @@ window.ascroll.conf={
  *
  **/
 window.ascroll.go = function (anchor, conf, cb, flash) {
-	conf = $.extend({}, ascroll.conf, conf);
+	conf = $.extend({ }, ascroll.conf, conf);
 	if (typeof(window.ascroll.once) != 'undefined') {
 		conf['anchor'] = window.ascroll.once;
 		delete window.ascroll.once;
@@ -137,14 +137,8 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 	
 	if (top > height) top = top - height;
 	else top = 0;
-
 	
-	
-
-
-
-	
-	if (document.documentElement && document.documentElement.scrollTop) {
+	if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
 		var container = $('html');
 	} else {
 		var container = $('body');
@@ -152,8 +146,10 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 	
 	var delta = top - container.scrollTop();
 	if (conf.fastScrollUp && delta < -200) {
+		console.log(top,options);
 		container.scrollTop(top+200);
 	}
+	console.log(top,options);
 	container.animate({
 		scrollTop:top
 	}, options);
