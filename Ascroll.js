@@ -146,10 +146,8 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 	
 	var delta = top - container.scrollTop();
 	if (conf.fastScrollUp && delta < -200) {
-		console.log(top,options);
 		container.scrollTop(top+200);
 	}
-	console.log(top,options);
 	container.animate({
 		scrollTop:top
 	}, options);
