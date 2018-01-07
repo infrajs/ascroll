@@ -5,7 +5,7 @@
 	"duration":800,
 	"js":["Ascroll.js","infra.js"],
 	"ascroll":true,
-	"fastScrollUp":true,
+	"fastScrollUp":false,
 	"dependencies":["config","event","controller"],
 	"anchor":0,
 	"height":0,
