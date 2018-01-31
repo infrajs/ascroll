@@ -1,7 +1,6 @@
 {
 	"name": "infrajs/ascroll",
 	"description": "Animate link click scroll anchor",
-	"license": "GPL3",
 	"require":{
 	
 	}
