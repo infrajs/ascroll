@@ -151,6 +151,9 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 	container.animate({
 		scrollTop:top
 	}, options);
+	//container.scroll( function () {
+		//container.stop();
+	//});
 }
 
 window.Ascroll = window.ascroll;
