@@ -1,10 +1,10 @@
-window.ascroll = function(conf){
+window.Ascroll = function(conf){
 
-	conf = $.extend(ascroll.conf, conf);
+	conf = $.extend(Ascroll.conf, conf);
 	var div=$(conf.div);
 
-	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-ascroll=false
-	var a=div.find('a:not(.ascroll):not([data-ascroll=false])');
+	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
+	var a=div.find('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
 		a.each(function(){
@@ -12,7 +12,7 @@ window.ascroll = function(conf){
 			if (!href) return;
 			var mark=href.split('#',2);
 			if (mark.length==2&&!mark[1]) return; //Только #
-			$(this).addClass('ascroll');
+			$(this).addClass('Ascroll');
 		});
 	} else { //Только #anchor
 		a.each(function(){
@@ -20,13 +20,13 @@ window.ascroll = function(conf){
 			if (!href) return;
 			var mark=href.split('#',2);
 			if (!mark[1]) return;
-			$(this).addClass('ascroll');
+			$(this).addClass('Ascroll');
 		});
 	}
 	a.each(function(){
-		if (!$(this).hasClass('ascroll')) return;
+		if (!$(this).hasClass('Ascroll')) return;
 
-		$(this).attr('data-ascroll',true);//.click(function (event) {
+		$(this).attr('data-Ascroll',true);//.click(function (event) {
 		this.addEventListener('click', function(event) {
 
 			var a = this;
@@ -60,7 +60,7 @@ window.ascroll = function(conf){
 			} else {
 				href = false;
 			}
-			ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
+			Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
 			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault(); 
 				window.history.pushState(null, null, href);
@@ -68,8 +68,9 @@ window.ascroll = function(conf){
 		});
 	});
 }
-window.ascroll.once;
-window.ascroll.conf={
+window.Ascroll.once;
+window.Ascroll.ignore;
+window.Ascroll.conf={
 	height: '.navbar-fixed-top',
 	anchor: 0, //Якорь по умолчанию
 	duration:"slow",
@@ -83,11 +84,14 @@ window.ascroll.conf={
  *
  *
  **/
-window.ascroll.go = function (anchor, conf, cb, flash) {
-	conf = $.extend({ }, ascroll.conf, conf);
-	if (typeof(window.ascroll.once) != 'undefined') {
-		conf['anchor'] = window.ascroll.once;
-		delete window.ascroll.once;
+window.Ascroll.go = function (anchor, conf, cb, flash) {
+	conf = $.extend({ }, Ascroll.conf, conf);
+	if (typeof(window.Ascroll.ignore) != 'undefined') {
+		delete window.Ascroll.ignore;
+	}
+	if (typeof(window.Ascroll.once) != 'undefined') {
+		conf['anchor'] = window.Ascroll.once;
+		delete window.Ascroll.once;
 		if (conf['anchor'] === false) return;
 	}
 	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
@@ -156,4 +160,5 @@ window.ascroll.go = function (anchor, conf, cb, flash) {
 	//});
 }
 
-window.Ascroll = window.ascroll;
+
+window.ascroll = window.Ascroll;
