@@ -101,7 +101,7 @@ window.Ascroll.go = function (anchor, conf, cb, flash) {
 		"easing":conf.easing,
 		"complete":cb
 	}
-
+	
 	if (typeof(anchor)=='string') {
 		var el = $(anchor);
 		if (el.length) {
@@ -109,7 +109,9 @@ window.Ascroll.go = function (anchor, conf, cb, flash) {
 			var top = el.offset().top;
 			options["step"] = function (now, fx) {
 				if (!el.is(':visible')) el=el.parents(':visible:first');
-				var top = el.offset().top;
+				var top = el.offset();
+				if (top) top = top.top;
+				else top = 0;
 				if (top > height) top = top - height;
 				else top = 0;
 				fx.end = top;
