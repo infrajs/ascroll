@@ -144,11 +144,11 @@ window.Ascroll.go = function (anchor, conf, cb, flash) {
 	if (top > height) top = top - height;
 	else top = 0;
 	
-	if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
-		var container = $('html');
-	} else {
-		var container = $('body');
-	}
+	//if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
+		var container = $('html, body');
+	//} else {
+	//	var container = $('body');
+	//}
 	
 	var delta = top - container.scrollTop();
 	if (conf.fastScrollUp && delta < -200) {
