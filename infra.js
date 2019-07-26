@@ -13,7 +13,9 @@
 			Ascroll.once = infra.scroll;
 			delete infra.scroll;
 		}
-		Ascroll.go(location.hash);
+		setTimeout(function () {
+			Ascroll.go(location.hash);
+		},1); //Ждём когда якорь появится на странице
 		
 	});
 	//domready(function(){
