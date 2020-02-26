@@ -1,4 +1,9 @@
-window.Ascroll = function(conf){
+//import CDN from 'vendor/akiyatkin/load/CDN.js'
+window.Ascroll = async (conf) => {
+	
+	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
+	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
+	await CDN.js('jquery');
 
 	conf = $.extend(Ascroll.conf, conf);
 	var div=$(conf.div);
@@ -70,7 +75,7 @@ window.Ascroll = function(conf){
 }
 window.Ascroll.once;
 window.Ascroll.ignore;
-window.Ascroll.conf={
+window.Ascroll.conf = {
 	height: '.navbar-fixed-top',
 	anchor: 0, //Якорь по умолчанию
 	duration:"slow",
@@ -84,7 +89,10 @@ window.Ascroll.conf={
  *
  *
  **/
-window.Ascroll.go = function (anchor, conf, cb, flash) {
+window.Ascroll.go = async (anchor, conf, cb, flash) => {
+	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
+	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
+	await CDN.js('jquery');
 	conf = $.extend({ }, Ascroll.conf, conf);
 	if (typeof(window.Ascroll.ignore) != 'undefined') {
 		delete window.Ascroll.ignore;
