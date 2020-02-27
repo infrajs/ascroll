@@ -1,4 +1,7 @@
-(function(){
+(async () => {
+	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
+	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
+	await CDN.load('jquery');
 	Event.handler('Controller.onshow', function () {
 		var conf = Config.get('ascroll');
 		Ascroll(conf);
@@ -22,7 +25,8 @@
 		
 	});
 
-	document.addEventListener("wheel", (e) => {
+	document.addEventListener("wheel", async (e) => {
+
 	 	if (document.documentElement && document.documentElement.scrollTop) {
 			$('html').stop();
 		} else {
