@@ -7,9 +7,9 @@
 		Ascroll(conf);
 	});
 
-	window.addEventListener('popstate', () => {
+	/*window.addEventListener('popstate', () => {
 		console.log('popstate')
-	});
+	});*/
 
 	Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 		//Нажимаем на ссылку, но infrajs.onshow не происходит. Ссылка с якорем
