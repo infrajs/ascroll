@@ -1,15 +1,14 @@
 //import CDN from 'vendor/akiyatkin/load/CDN.js'
 window.Ascroll = async (conf) => {
 	
-	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
-	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
-	await CDN.js('jquery');
+	let CDN = (await import('/vendor/akiyatkin/load/CDN.js')).default
+	await CDN.js('jquery')
 
-	conf = $.extend(Ascroll.conf, conf);
-	var div=$(conf.div);
+	conf = $.extend(Ascroll.conf, conf)
+	var div = $(conf.div)
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
-	var a=div.find('a:not(.Ascroll):not([data-Ascroll=false])');
+	var a = div.find('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
 		a.each(function(){
@@ -90,8 +89,7 @@ window.Ascroll.conf = {
  *
  **/
 window.Ascroll.go = async (anchor, conf, cb, flash) => {
-	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
-	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
+	let CDN = (await import('/vendor/akiyatkin/load/CDN.js')).default
 	await CDN.js('jquery');
 	conf = $.extend({ }, Ascroll.conf, conf);
 	if (typeof(window.Ascroll.ignore) != 'undefined') {
