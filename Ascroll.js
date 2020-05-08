@@ -1,9 +1,7 @@
-//import CDN from 'vendor/akiyatkin/load/CDN.js'
-window.Ascroll = async (conf) => {
-	
-	let CDN = (await import('/vendor/akiyatkin/load/CDN.js')).default
-	await CDN.js('jquery')
-
+import { CDN } from '/vendor/akiyatkin/load/CDN.js'
+import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
+let Ascroll = async (conf) => {
+	await CDN.load('jquery')
 	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
 
@@ -11,52 +9,52 @@ window.Ascroll = async (conf) => {
 	var a = div.find('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 	if (conf.global) {
-		a.each(function(){
-			var href=$(this).attr('href');
+		a.each(function () {
+			var href = $(this).attr('href');
 			if (!href) return;
-			var mark=href.split('#',2);
-			if (mark.length==2&&!mark[1]) return; //Только #
+			var mark = href.split('#', 2);
+			if (mark.length == 2 && !mark[1]) return; //Только #
 			$(this).addClass('Ascroll');
 		});
 	} else { //Только #anchor
-		a.each(function(){
-			var href=$(this).attr('href');
+		a.each(function () {
+			var href = $(this).attr('href');
 			if (!href) return;
-			var mark=href.split('#',2);
+			var mark = href.split('#', 2);
 			if (!mark[1]) return;
 			$(this).addClass('Ascroll');
 		});
 	}
-	a.each(function(){
+	a.each(function () {
 		if (!$(this).hasClass('Ascroll')) return;
 
-		$(this).attr('data-Ascroll',true);//.click(function (event) {
-		this.addEventListener('click', function(event) {
+		$(this).attr('data-Ascroll', true);//.click(function (event) {
+		this.addEventListener('click', function (event) {
 
 			var a = this;
 			var href = $(a).attr('href');
 
-			if (window.Crumb&&!Crumb.isInternal(href)) return;
+			if (!Crumb.isInternal(href)) return;
 
 			var is = a.getAttribute('infra');
-			if (is ==  'false') return;
+			if (is == 'false') return;
 			var is = a.getAttribute('data-crumb');
 
 			if (is == 'false') return;
 
 
-			var anchor=$(a).data('anchor'); //Якорь из атрибута
-			
+			var anchor = $(a).data('anchor'); //Якорь из атрибута
+
 			if (!anchor) {
 				anchor = href.split('#', 2); //Якорь из ссылки
 				anchor = anchor[1];
 				if (anchor) {
 					href = href[0];
-					var nanchor=Number(anchor);
-					if(nanchor==anchor){
-						anchor=nanchor;
+					var nanchor = Number(anchor);
+					if (nanchor == anchor) {
+						anchor = nanchor;
 					} else {
-						anchor='#'+anchor;
+						anchor = '#' + anchor;
 					}
 				} else {
 					href = false;
@@ -66,55 +64,54 @@ window.Ascroll = async (conf) => {
 			}
 			Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
 			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
-				event.preventDefault(); 
+				event.preventDefault();
 				window.history.pushState(null, null, href);
 			}
 		});
 	});
 }
-window.Ascroll.once;
-window.Ascroll.ignore;
-window.Ascroll.conf = {
+Ascroll.once;
+Ascroll.ignore;
+Ascroll.conf = {
 	height: '.navbar-fixed-top',
 	anchor: 0, //Якорь по умолчанию
-	duration:"slow",
-	easing:"swing",
+	duration: "slow",
+	easing: "swing",
 	marginBottom: '.space',
-	div:'body',
-	global:false //false - применяется только к #anchor ссылкам на текущую страницу, true - применяется ко всем ссылкам, скролл будет наверх браузера или согласно параметров указанных в атрибутах.
+	div: 'body',
+	global: false //false - применяется только к #anchor ссылкам на текущую страницу, true - применяется ко всем ссылкам, скролл будет наверх браузера или согласно параметров указанных в атрибутах.
 }
 /**
  * 
  *
  *
  **/
-window.Ascroll.go = async (anchor, conf, cb, flash) => {
-	let CDN = (await import('/vendor/akiyatkin/load/CDN.js')).default
-	await CDN.js('jquery');
-	conf = $.extend({ }, Ascroll.conf, conf);
-	if (typeof(window.Ascroll.ignore) != 'undefined') {
+Ascroll.go = async (anchor, conf, cb, flash) => {
+	await CDN.load('jquery');
+	conf = $.extend({}, Ascroll.conf, conf);
+	if (typeof (window.Ascroll.ignore) != 'undefined') {
 		delete window.Ascroll.ignore;
 	}
-	if (typeof(window.Ascroll.once) != 'undefined') {
+	if (typeof (window.Ascroll.once) != 'undefined') {
 		conf['anchor'] = window.Ascroll.once;
 		delete window.Ascroll.once;
 		if (conf['anchor'] === false) return;
 	}
-	if (!anchor) anchor=conf.anchor; //Якорь по умолчанию
+	if (!anchor) anchor = conf.anchor; //Якорь по умолчанию
 
 	var options = {
-		"duration":conf.duration,
-		"easing":conf.easing,
-		"complete":cb
+		"duration": conf.duration,
+		"easing": conf.easing,
+		"complete": cb
 	}
-	
-	if (typeof(anchor)=='string') {
+
+	if (typeof (anchor) == 'string') {
 		var el = $(anchor);
 		if (el.length) {
-			if (!el.is(':visible')) el=el.parents(':visible:first');
+			if (!el.is(':visible')) el = el.parents(':visible:first');
 			var top = el.offset().top;
 			options["step"] = function (now, fx) {
-				if (!el.is(':visible')) el=el.parents(':visible:first');
+				if (!el.is(':visible')) el = el.parents(':visible:first');
 				var top = el.offset();
 				if (top) top = top.top;
 				else top = 0;
@@ -125,48 +122,49 @@ window.Ascroll.go = async (anchor, conf, cb, flash) => {
 		} else {
 			var top = 0;
 		}
-	} else if (typeof(anchor)=='number') {
-		var top=anchor;
+	} else if (typeof (anchor) == 'number') {
+		var top = anchor;
 	} else {
 		var top = 0;
 	}
-	var height=0;
+	var height = 0;
 
-	if (typeof(conf.height) == 'string' && $(conf.height).length) {
+	if (typeof (conf.height) == 'string' && $(conf.height).length) {
 		height = $(conf.height).height();
-	} else if (typeof(conf.height) == 'number') {
+	} else if (typeof (conf.height) == 'number') {
 		height = conf.height;
 	}
-	
+
 	var marginBottom = 20;
-	if (typeof(conf.marginBottom) == 'string' && $(conf.marginBottom).length) {
+	if (typeof (conf.marginBottom) == 'string' && $(conf.marginBottom).length) {
 		marginBottom = parseInt($(conf.marginBottom).css('margin-bottom'));
-	} if (typeof(conf.marginBottom) == 'number') {
+	} if (typeof (conf.marginBottom) == 'number') {
 		marginBottom = conf.marginBottom;
 	}
 
 	height = height + marginBottom;
-	
+
 	if (top > height) top = top - height;
 	else top = 0;
-	
+
 	//if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
-		var container = $('html, body');
+	var container = $('html, body');
 	//} else {
 	//	var container = $('body');
 	//}
-	
+
 	var delta = top - container.scrollTop();
 	if (conf.fastScrollUp && delta < -200) {
-		container.scrollTop(top+200);
+		container.scrollTop(top + 200);
 	}
 	container.animate({
-		scrollTop:top
+		scrollTop: top
 	}, options);
 	//container.scroll( function () {
-		//container.stop();
+	//container.stop();
 	//});
 }
 
 
-window.ascroll = window.Ascroll;
+window.Ascroll = Ascroll;
+export { Ascroll };
