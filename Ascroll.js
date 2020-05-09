@@ -1,6 +1,9 @@
 import { CDN } from '/vendor/akiyatkin/load/CDN.js'
 import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
+import { Event } from '/vendor/infrajs/event/Event.js'
+
 let Ascroll = async (conf) => {
+
 	await CDN.load('jquery')
 	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
@@ -62,7 +65,10 @@ let Ascroll = async (conf) => {
 			} else {
 				href = false;
 			}
-			Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
+			Event.onext('Controller.onshow', () => {
+				Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
+			})
+
 			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault();
 				window.history.pushState(null, null, href);
@@ -104,7 +110,6 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 		"easing": conf.easing,
 		"complete": cb
 	}
-
 	if (typeof (anchor) == 'string') {
 		var el = $(anchor);
 		if (el.length) {
