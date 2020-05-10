@@ -7,7 +7,17 @@ Event.handler('Controller.onshow', function () {
 	var conf = Config.get('ascroll');
 	Ascroll(conf);
 });
-
+Event.one('Controller.onshow', function () {
+	CDN.load('jquery').then(() => {
+		document.addEventListener("wheel", async (e) => {
+			if (document.documentElement && document.documentElement.scrollTop) {
+				$('html').stop()
+			} else {
+				$('body').stop()
+			}
+		})
+	})
+});
 /*window.addEventListener('popstate', () => {
 	console.log('popstate')
 });*/
@@ -25,14 +35,6 @@ Event.handler('Crumb.onchange', function () {// это native click Crumb, по�
 	}, 1); //Ждём когда якорь появится на странице
 
 });
-CDN.load('jquery').then(() => {
-	document.addEventListener("wheel", async (e) => {
-		if (document.documentElement && document.documentElement.scrollTop) {
-			$('html').stop()
-		} else {
-			$('body').stop()
-		}
-	})
-})
+
 
 
