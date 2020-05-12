@@ -33,17 +33,18 @@ let Ascroll = async (conf) => {
 
 			var is = a.getAttribute('infra');
 			if (is == 'false') return;
-			var is = a.getAttribute('data-crumb');
 
+			var is = a.getAttribute('data-crumb');
 			if (is == 'false') return;
 
 
 			var anchor = $(a).data('anchor'); //Якорь из атрибута
-
+			let hash = false
 			if (!anchor) {
 				anchor = href.split('#', 2); //Якорь из ссылки
 				anchor = anchor[1];
 				if (anchor) {
+					hash = anchor
 					href = href[0];
 					var nanchor = Number(anchor);
 					if (nanchor == anchor) {
@@ -57,9 +58,13 @@ let Ascroll = async (conf) => {
 			} else {
 				href = false;
 			}
-			Event.onext('Controller.onshow', () => {
-				Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
-			})
+			if (hash) {
+				Ascroll.go('#'+hash, conf);
+			} else {
+				Event.onext('Controller.onshow', () => {
+					Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
+				})
+			}
 
 			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault();
