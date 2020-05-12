@@ -11,27 +11,19 @@ let Ascroll = async (conf) => {
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
 	var a = div.find('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
-	if (conf.global) {
-		a.each(function () {
-			var href = $(this).attr('href');
-			if (!href) return;
-			var mark = href.split('#', 2);
-			if (mark.length == 2 && !mark[1]) return; //Только #
-			$(this).addClass('Ascroll');
-		});
-	} else { //Только #anchor
-		a.each(function () {
-			var href = $(this).attr('href');
-			if (!href) return;
-			var mark = href.split('#', 2);
-			if (!mark[1]) return;
-			$(this).addClass('Ascroll');
-		});
-	}
+	
+	a.each(function () {
+		var href = $(this).attr('href');
+		if (!href) return;
+		var mark = href.split('#', 2);
+		if (mark.length == 2 && !mark[1]) return; //Только #
+		$(this).addClass('Ascroll');
+	});
+	
 	a.each(function () {
 		if (!$(this).hasClass('Ascroll')) return;
 
-		$(this).attr('data-Ascroll', true);//.click(function (event) {
+		$(this).attr('data-Ascroll', true); //.click(function (event) {
 		this.addEventListener('click', function (event) {
 
 			var a = this;
