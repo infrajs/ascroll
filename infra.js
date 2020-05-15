@@ -6,7 +6,7 @@ import { Config } from '/vendor/infrajs/config/Config.js'
 import { DOM } from '/vendor/akiyatkin/load/DOM.js'
 import { CallFrame } from '/vendor/akiyatkin/waitshow/CallFrame.js'
 
-DOM.race('show',() => {
+DOM.race('load',() => {
 	let conf = Config.get('ascroll');
 	Ascroll(conf);
 })
