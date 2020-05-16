@@ -4,7 +4,7 @@ import { Event } from '/vendor/infrajs/event/Event.js'
 
 let Ascroll = async (conf) => {
 
-	await CDN.load('jquery')
+	await CDN.on('load','jquery')
 	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
 
@@ -90,7 +90,7 @@ Ascroll.conf = {
  *
  **/
 Ascroll.go = async (anchor, conf, cb, flash) => {
-	await CDN.load('jquery');
+	await CDN.on('load','jquery');
 	conf = $.extend({}, Ascroll.conf, conf);
 	if (typeof (window.Ascroll.ignore) != 'undefined') {
 		delete window.Ascroll.ignore;
