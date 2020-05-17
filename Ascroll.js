@@ -3,7 +3,6 @@ import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
 import { Event } from '/vendor/infrajs/event/Event.js'
 
 let Ascroll = async (conf) => {
-
 	await CDN.on('load','jquery')
 	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
@@ -66,10 +65,10 @@ let Ascroll = async (conf) => {
 				})
 			}
 
-			if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
+			/*if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault();
 				window.history.pushState(null, null, href);
-			}
+			}*/
 		});
 	});
 }

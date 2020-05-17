@@ -6,13 +6,13 @@ import { Config } from '/vendor/infrajs/config/Config.js'
 import { DOM } from '/vendor/akiyatkin/load/DOM.js'
 import { CallFrame } from '/vendor/akiyatkin/waitshow/CallFrame.js'
 
-DOM.race('load',() => {
+DOM.done('load',() => {
 	let conf = Config.get('ascroll');
 	Ascroll(conf);
 })
 
 
-CDN.load('jquery').then(() => {
+CDN.on('load','jquery').then(() => {
 	let check = () => {
 		if (document.documentElement && document.documentElement.scrollTop) {
 			$('html').stop()
