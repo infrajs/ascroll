@@ -60,12 +60,12 @@ let Ascroll = async (conf) => {
 			if (hash) {
 				Ascroll.go('#'+hash, conf);
 			} else {
-				$('body, html').css('overflow-y','hidden')
-				$('body').css('margin-right','17px')
+				document.body.style.overflowY = 'hidden'
+				document.body.style.marginRight = '17px'
 				DOM.once('load').then(()=> {
 					Ascroll.go(anchor, conf, () => {
-						$('body').css('margin-right','0px')
-						$('body, html').css('overflow-y','auto')
+						document.body.style.overflowY = ''
+						document.body.style.marginRight = ''
 					}); //Даже когда адрес уже открыт скролить мы всё равно должны
 				})
 				/*Event.onext('Controller.onshow', () => {
