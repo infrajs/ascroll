@@ -2,7 +2,7 @@
 	"pub":["anchor","height","marginBottom","flash","easing","duration","fastScrollUp"],
 	"require":"infra.php",
 	"easing":"swing",
-	"duration":800,
+	"duration":400,
 	"js":["infra.js"],
 	"ascroll":true,
 	"fastScrollUp":false,

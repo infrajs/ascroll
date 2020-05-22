@@ -12,26 +12,33 @@ DOM.done('load', href => {
 })
 
 
-CDN.on('load','jquery').then(() => {
-	let check = () => {
-		if (document.documentElement && document.documentElement.scrollTop) {
-			$('html').stop()
-		} else {
-			$('body').stop()
-		}
-	}
-	document.addEventListener("wheel", async () => CallFrame(check))
-})
+// CDN.on('load','jquery').then(() => {
+	
+// 	let check = (event) => {
+// 		//if (Ascroll.process) 
+// 		event.stopPropagation();
+// 		event.preventDefault()
+// 		console.log(1)
+// 		var container = $('html, body')
+
+// 		//Ascroll.timer = new Date().getTime()
+// 		console.log(1)
+// 		container.stop()
+// 	}
+// 	//document.addEventListener("wheel", () => CallFrame(check))
+// 	document.addEventListener("wheel", check)
+// })
 
 
 Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 	//Нажимаем на ссылку, но Controller.onshow не происходит. Ссылка с якорем
 	if (Crumb.popstate) return; //back forward
 	if (Crumb.a && !location.hash) return; //link click
+	//if (!location.hash) return; //link click
 	
-	setTimeout(function () {
+	DOM.once('load').then(()=> {
 		Ascroll.go(location.hash);
-	}, 1); //Ждём когда якорь появится на странице
+	}); //Ждём когда якорь появится на странице
 });
 
 

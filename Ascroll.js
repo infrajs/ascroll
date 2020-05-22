@@ -60,9 +60,17 @@ let Ascroll = async (conf) => {
 			if (hash) {
 				Ascroll.go('#'+hash, conf);
 			} else {
-				Event.onext('Controller.onshow', () => {
-					Ascroll.go(anchor, conf); //Даже когда адрес уже открыт скролить мы всё равно должны
+				$('body, html').css('overflow-y','hidden')
+				$('body').css('margin-right','17px')
+				DOM.once('load').then(()=> {
+					Ascroll.go(anchor, conf, () => {
+						$('body').css('margin-right','0px')
+						$('body, html').css('overflow-y','auto')
+					}); //Даже когда адрес уже открыт скролить мы всё равно должны
 				})
+				/*Event.onext('Controller.onshow', () => {
+					
+				})*/
 			}
 
 			/*if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
