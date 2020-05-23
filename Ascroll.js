@@ -60,16 +60,23 @@ let Ascroll = async (conf) => {
 			if (hash) {
 				Ascroll.go('#'+hash, conf);
 			} else {
-				document.body.style.overflowY = 'hidden'
+				//document.body.style.position = 'fixed'
+				document.body.style.overflowY = 'scroll'
+				document.body.style.width = '100%'
+				//DOM.once('load').then(()=> {
+					Ascroll.go(anchor, conf, () => {
+						document.body.style.overflowY = ''
+						//document.body.style.position = ''
+						document.body.style.width = ''
+					}); //Даже когда адрес уже открыт скролить мы всё равно должны
+				//})
+				/*document.body.style.overflowY = 'hidden'
 				document.body.style.marginRight = '17px'
 				DOM.once('load').then(()=> {
 					Ascroll.go(anchor, conf, () => {
 						document.body.style.overflowY = ''
 						document.body.style.marginRight = ''
 					}); //Даже когда адрес уже открыт скролить мы всё равно должны
-				})
-				/*Event.onext('Controller.onshow', () => {
-					
 				})*/
 			}
 
