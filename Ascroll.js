@@ -37,7 +37,7 @@ let Ascroll = async (conf) => {
 			if (is == 'false') return;
 
 
-			var anchor = $(a).data('anchor'); //Якорь из атрибута
+			var anchor = a.dataset.anchor; //Якорь из атрибута
 			let hash = false
 			if (!anchor) {
 				anchor = href.split('#', 2); //Якорь из ссылки
@@ -63,6 +63,8 @@ let Ascroll = async (conf) => {
 				//document.body.style.position = 'fixed'
 				document.body.style.overflowY = 'scroll'
 				document.body.style.width = '100%'
+				
+				
 				//DOM.once('load').then(()=> {
 					Ascroll.go(anchor, conf, () => {
 						document.body.style.overflowY = ''
@@ -104,6 +106,7 @@ Ascroll.conf = {
  *
  **/
 Ascroll.go = async (anchor, conf, cb, flash) => {
+	
 	await CDN.on('load','jquery');
 	conf = $.extend({}, Ascroll.conf, conf);
 	if (typeof (window.Ascroll.ignore) != 'undefined') {
@@ -124,9 +127,9 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	if (typeof (anchor) == 'string') {
 		var el = $(anchor);
 		if (el.length) {
-			if (!el.is(':visible')) el = el.parents(':visible:first');
+			//if (!el.is(':visible')) el = el.parents(':visible:first');
 			var top = el.offset().top;
-			options["step"] = function (now, fx) {
+			/*options["step"] = function (now, fx) {
 				if (!el.is(':visible')) el = el.parents(':visible:first');
 				var top = el.offset();
 				if (top) top = top.top;
@@ -134,7 +137,7 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 				if (top > height) top = top - height;
 				else top = 0;
 				fx.end = top;
-			}
+			}*/
 		} else {
 			var top = 0;
 		}
@@ -173,6 +176,7 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	if (conf.fastScrollUp && delta < -200) {
 		container.scrollTop(top + 200);
 	}
+	
 	container.animate({
 		scrollTop: top
 	}, options);
