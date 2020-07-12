@@ -3,14 +3,14 @@ import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
 import { Event } from '/vendor/infrajs/event/Event.js'
 
 let Ascroll = async (conf) => {
-	await CDN.on('load','jquery')
+	await CDN.on('load', 'jquery')
 	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
 	var a = div.find('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
-	
+
 	a.each(function () {
 		var href = $(this).attr('href');
 		if (!href) return;
@@ -18,12 +18,12 @@ let Ascroll = async (conf) => {
 		if (mark.length == 2 && !mark[1]) return; //Только #
 		$(this).addClass('Ascroll');
 	});
-	
+
 	a.each(function () {
 		if (!$(this).hasClass('Ascroll')) return;
 
 		$(this).attr('data-Ascroll', true); //.click(function (event) {
-		this.addEventListener('click', function (event) {
+		this.addEventListener('click', async event => {
 
 			var a = this;
 			var href = $(a).attr('href');
@@ -57,30 +57,33 @@ let Ascroll = async (conf) => {
 			} else {
 				href = false;
 			}
+
+			//document.body.style.position = 'fixed'
+			document.body.style.overflowY = 'scroll'
+			document.body.style.width = '100%'
+
+
+			//DOM.once('load').then(()=> {
+			Ascroll.go(anchor, conf, () => {
+				document.body.style.overflowY = ''
+				//document.body.style.position = ''
+				document.body.style.width = ''
+			}); //Даже когда адрес уже открыт скролить мы всё равно должны
+			//})
+			/*document.body.style.overflowY = 'hidden'
+			document.body.style.marginRight = '17px'
+			DOM.once('load').then(()=> {
+				Ascroll.go(anchor, conf, () => {
+					document.body.style.overflowY = ''
+					document.body.style.marginRight = ''
+				}); //Даже когда адрес уже открыт скролить мы всё равно должны
+			})*/
+
 			if (hash) {
-				Ascroll.go('#'+hash, conf);
-			} else {
-				//document.body.style.position = 'fixed'
-				document.body.style.overflowY = 'scroll'
-				document.body.style.width = '100%'
-				
-				
-				//DOM.once('load').then(()=> {
-					Ascroll.go(anchor, conf, () => {
-						document.body.style.overflowY = ''
-						//document.body.style.position = ''
-						document.body.style.width = ''
-					}); //Даже когда адрес уже открыт скролить мы всё равно должны
-				//})
-				/*document.body.style.overflowY = 'hidden'
-				document.body.style.marginRight = '17px'
-				DOM.once('load').then(()=> {
-					Ascroll.go(anchor, conf, () => {
-						document.body.style.overflowY = ''
-						document.body.style.marginRight = ''
-					}); //Даже когда адрес уже открыт скролить мы всё равно должны
-				})*/
+				await DOM.wait('check')
+				Ascroll.go('#' + hash, conf)
 			}
+
 
 			/*if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault();
@@ -105,25 +108,7 @@ Ascroll.conf = {
  *
  *
  **/
-Ascroll.go = async (anchor, conf, cb, flash) => {
-	
-	await CDN.on('load','jquery');
-	conf = $.extend({}, Ascroll.conf, conf);
-	if (typeof (window.Ascroll.ignore) != 'undefined') {
-		delete window.Ascroll.ignore;
-	}
-	if (typeof (window.Ascroll.once) != 'undefined') {
-		conf['anchor'] = window.Ascroll.once;
-		delete window.Ascroll.once;
-		if (conf['anchor'] === false) return;
-	}
-	if (!anchor) anchor = conf.anchor; //Якорь по умолчанию
-
-	var options = {
-		"duration": conf.duration,
-		"easing": conf.easing,
-		"complete": cb
-	}
+Ascroll.topcalc = (anchor, conf) => {
 	if (typeof (anchor) == 'string') {
 		var el = $(anchor);
 		if (el.length) {
@@ -164,7 +149,25 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	height = height + marginBottom;
 
 	if (top > height) top = top - height;
-	else top = 0;
+	else top = 0
+	return top
+}
+Ascroll.go = async (anchor, conf, cb, flash) => {
+
+	await CDN.fire('load', 'jquery');
+	conf = $.extend({}, Ascroll.conf, conf);
+	if (typeof (window.Ascroll.ignore) != 'undefined') {
+		delete window.Ascroll.ignore;
+	}
+	if (typeof (window.Ascroll.once) != 'undefined') {
+		conf['anchor'] = window.Ascroll.once;
+		delete window.Ascroll.once;
+		if (conf['anchor'] === false) return;
+	}
+
+	if (!anchor) anchor = conf.anchor; //Якорь по умолчанию
+
+	let top = Ascroll.topcalc(anchor, conf)
 
 	//if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
 	var container = $('html, body');
@@ -176,7 +179,22 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	if (conf.fastScrollUp && delta < -200) {
 		container.scrollTop(top + 200);
 	}
-	
+	var options = {
+		"duration": conf.duration,
+		"easing": conf.easing,
+		"complete": () => {
+
+			let newtop = Ascroll.topcalc(anchor, conf)
+			if (top == newtop) {
+				if (cb) cb()
+				return
+			}
+			top = newtop;
+			container.animate({
+				scrollTop: top
+			}, options);
+		}
+	}
 	container.animate({
 		scrollTop: top
 	}, options);
