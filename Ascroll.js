@@ -80,8 +80,10 @@ let Ascroll = async (conf) => {
 			})*/
 
 			if (hash) {
-				await DOM.wait('check')
-				Ascroll.go('#' + hash, conf)
+				DOM.wait('check').then(() => {
+					if ('#' + hash != location.hash) return
+					Ascroll.go('#' + hash, conf)
+				})
 			}
 
 
@@ -152,10 +154,8 @@ Ascroll.topcalc = (anchor, conf) => {
 	else top = 0
 	return top
 }
-Ascroll.go = async (anchor, conf, cb, flash) => {
-
-	await CDN.fire('load', 'jquery');
-	conf = $.extend({}, Ascroll.conf, conf);
+Ascroll.go = (anchor, conf, cb) => {
+	conf = { ...Ascroll.conf, ...conf }
 	if (typeof (window.Ascroll.ignore) != 'undefined') {
 		delete window.Ascroll.ignore;
 	}
@@ -170,6 +170,7 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	let win = document.scrollingElement
 	win.style.scrollBehavior = 'smooth'
 	win.scrollTop = top
+	if (cb) cb()
 }
 window.Ascroll = Ascroll;
 export { Ascroll };

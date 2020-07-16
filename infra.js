@@ -28,15 +28,12 @@ DOM.done('load', href => {
 // 	//document.addEventListener("wheel", () => CallFrame(check))
 // 	document.addEventListener("wheel", check)
 // })
-
-
 Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 	//Нажимаем на ссылку, но Controller.onshow не происходит. Ссылка с якорем
 	if (Crumb.popstate) return; //back forward
 	if (Crumb.a && !location.hash) return; //link click
 	//if (!location.hash) return; //link click
-	
-	DOM.once('load').then(()=> {
+	DOM.once('load').then(() => {
 		Ascroll.go(location.hash);
 	}); //Ждём когда якорь появится на странице
 });
