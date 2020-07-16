@@ -166,43 +166,10 @@ Ascroll.go = async (anchor, conf, cb, flash) => {
 	}
 
 	if (!anchor) anchor = conf.anchor; //Якорь по умолчанию
-
 	let top = Ascroll.topcalc(anchor, conf)
-
-	//if (document.documentElement && typeof(document.documentElement.scrollTop) != 'undefined' )  {
-	var container = $('html, body');
-	//} else {
-	//	var container = $('body');
-	//}
-
-	var delta = top - container.scrollTop();
-	if (conf.fastScrollUp && delta < -200) {
-		container.scrollTop(top + 200);
-	}
-	var options = {
-		"duration": conf.duration,
-		"easing": conf.easing,
-		"complete": () => {
-
-			let newtop = Ascroll.topcalc(anchor, conf)
-			if (top == newtop) {
-				if (cb) cb()
-				return
-			}
-			top = newtop;
-			container.animate({
-				scrollTop: top
-			}, options);
-		}
-	}
-	container.animate({
-		scrollTop: top
-	}, options);
-	//container.scroll( function () {
-	//container.stop();
-	//});
+	let win = document.scrollingElement
+	win.style.scrollBehavior = 'smooth'
+	win.scrollTop = top
 }
-
-
 window.Ascroll = Ascroll;
 export { Ascroll };
