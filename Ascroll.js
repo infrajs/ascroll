@@ -3,8 +3,10 @@ import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
 import { Event } from '/vendor/infrajs/event/Event.js'
 
 let Ascroll = async (conf) => {
+	
+	conf = { ...Ascroll.conf, ...conf}
+	
 	await CDN.on('load', 'jquery')
-	conf = $.extend(Ascroll.conf, conf)
 	var div = $(conf.div)
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
@@ -12,7 +14,7 @@ let Ascroll = async (conf) => {
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 
 	a.each(function () {
-		var href = $(this).attr('href');
+		var href = this.getAttribute('href');
 		if (!href) return;
 		var mark = href.split('#', 2);
 		if (mark.length == 2 && !mark[1]) return; //Только #
