@@ -170,7 +170,7 @@ Ascroll.go = (anchor, conf, cb) => {
 	if (!anchor) anchor = conf.anchor; //Якорь по умолчанию
 	let top = Ascroll.topcalc(anchor, conf)
 	let win = document.scrollingElement
-	win.style.scrollBehavior = 'smooth'
+	document.documentElement.style.scrollBehavior = 'smooth'
 	win.scrollTop = top
 	if (cb) cb()
 }
