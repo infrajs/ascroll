@@ -172,6 +172,13 @@ Ascroll.go = (anchor, conf, cb) => {
 	let win = document.scrollingElement
 	document.documentElement.style.scrollBehavior = 'smooth'
 	win.scrollTop = top
+	console.log(top)
+	let timer = setInterval(() => {
+		let t = Ascroll.topcalc(anchor, conf)
+		if(t == top) return clearInterval(timer)
+		top = t
+		win.scrollTop = top
+	}, 400)
 	if (cb) cb()
 }
 window.Ascroll = Ascroll;
