@@ -6,29 +6,27 @@ let Ascroll = async (conf) => {
 	
 	conf = { ...Ascroll.conf, ...conf}
 	
-	await CDN.on('load', 'jquery')
-	var div = $(conf.div)
+	var div = document.querySelector(conf.div)
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
-	var a = div.find('a:not(.Ascroll):not([data-Ascroll=false])');
+	const aa = div.querySelectorAll('a:not(.Ascroll):not([data-Ascroll=false])');
 	//Так как многие плагины используют "#" такую ссылку в технологических целях... такие ссылки игнорируются
 
-	a.each(function () {
-		var href = this.getAttribute('href');
-		if (!href) return;
-		var mark = href.split('#', 2);
-		if (mark.length == 2 && !mark[1]) return; //Только #
-		$(this).addClass('Ascroll');
-	});
+	for (const a of aa) {
+		let href = a.getAttribute('href');
+		if (!href) continue;
+		let mark = href.split('#', 2);
+		if (mark.length == 2 && !mark[1]) continue; //Только #
+		a.classList.add('Ascroll');
+	}
 
-	a.each(function () {
-		if (!$(this).hasClass('Ascroll')) return;
+	for (const a of aa) {
+		if (!a.classList.contains('Ascroll')) return;
 
-		$(this).attr('data-Ascroll', true); //.click(function (event) {
-		this.addEventListener('click', async event => {
+		a.setAttribute('data-Ascroll', true); //.click(function (event) {
+		a.addEventListener('click', async event => {
 
-			var a = this;
-			var href = $(a).attr('href');
+			var href = a.getAttribute('href');
 
 			if (!Crumb.isInternal(href)) return;
 
@@ -94,7 +92,7 @@ let Ascroll = async (conf) => {
 				window.history.pushState(null, null, href);
 			}*/
 		});
-	});
+	}
 }
 Ascroll.once;
 Ascroll.ignore;
@@ -114,7 +112,7 @@ Ascroll.conf = {
  **/
 Ascroll.topcalc = (anchor, conf) => {
 	if (typeof (anchor) == 'string') {
-		var el = $(anchor);
+		var el = document.querySelector(anchor);
 		if (el.length) {
 			//if (!el.is(':visible')) el = el.parents(':visible:first');
 			var top = el.offset().top;
@@ -137,16 +135,14 @@ Ascroll.topcalc = (anchor, conf) => {
 	}
 	var height = 0;
 
-	if (typeof (conf.height) == 'string' && $(conf.height).length) {
-		height = $(conf.height).height();
+	if (typeof (conf.height) == 'string' && document.querySelector(conf.height)) {
+		height = document.querySelector(conf.height).offsetHeight();
 	} else if (typeof (conf.height) == 'number') {
 		height = conf.height;
 	}
 
 	var marginBottom = 20;
-	if (typeof (conf.marginBottom) == 'string' && $(conf.marginBottom).length) {
-		marginBottom = parseInt($(conf.marginBottom).css('margin-bottom'));
-	} if (typeof (conf.marginBottom) == 'number') {
+	if (typeof (conf.marginBottom) == 'number') {
 		marginBottom = conf.marginBottom;
 	}
 
