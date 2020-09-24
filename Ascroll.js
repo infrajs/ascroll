@@ -19,15 +19,11 @@ let Ascroll = async (conf) => {
 		if (mark.length == 2 && !mark[1]) continue; //Только #
 		a.classList.add('Ascroll');
 	}
-
 	for (const a of aa) {
-		if (!a.classList.contains('Ascroll')) return;
-
+		if (!a.classList.contains('Ascroll')) continue;
 		a.setAttribute('data-Ascroll', true); //.click(function (event) {
-		a.addEventListener('click', async event => {
-
-			var href = a.getAttribute('href');
-
+		a.addEventListener('click', event => {
+			let href = a.getAttribute('href');
 			if (!Crumb.isInternal(href)) return;
 
 			var is = a.getAttribute('infra');
@@ -115,7 +111,7 @@ Ascroll.topcalc = (anchor, conf) => {
 		var el = document.querySelector(anchor);
 		if (el) {
 			//if (!el.is(':visible')) el = el.parents(':visible:first');
-			var top = el.offsetTop
+			var top = el.getBoundingClientRect().top + window.pageYOffset
 			/*options["step"] = function (now, fx) {
 				if (!el.is(':visible')) el = el.parents(':visible:first');
 				var top = el.offset();
@@ -156,6 +152,7 @@ Ascroll.go = (anchor, conf, cb) => {
 	conf = { ...Ascroll.conf, ...conf }
 	if (typeof (window.Ascroll.ignore) != 'undefined') {
 		delete window.Ascroll.ignore;
+		return;
 	}
 	if (typeof (window.Ascroll.once) != 'undefined') {
 		conf['anchor'] = window.Ascroll.once;
