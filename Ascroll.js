@@ -113,9 +113,9 @@ Ascroll.conf = {
 Ascroll.topcalc = (anchor, conf) => {
 	if (typeof (anchor) == 'string') {
 		var el = document.querySelector(anchor);
-		if (el.length) {
+		if (el) {
 			//if (!el.is(':visible')) el = el.parents(':visible:first');
-			var top = el.offset().top;
+			var top = el.offsetTop
 			/*options["step"] = function (now, fx) {
 				if (!el.is(':visible')) el = el.parents(':visible:first');
 				var top = el.offset();
@@ -136,7 +136,7 @@ Ascroll.topcalc = (anchor, conf) => {
 	var height = 0;
 
 	if (typeof (conf.height) == 'string' && document.querySelector(conf.height)) {
-		height = document.querySelector(conf.height).offsetHeight();
+		height = document.querySelector(conf.height).offsetHeight;
 	} else if (typeof (conf.height) == 'number') {
 		height = conf.height;
 	}
