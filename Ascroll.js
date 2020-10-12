@@ -148,6 +148,7 @@ Ascroll.topcalc = (anchor, conf) => {
 	else top = 0
 	return top
 }
+let timer
 Ascroll.go = (anchor, conf, cb) => {
 	conf = { ...Ascroll.conf, ...conf }
 	if (typeof (window.Ascroll.ignore) != 'undefined') {
@@ -166,7 +167,8 @@ Ascroll.go = (anchor, conf, cb) => {
 	document.documentElement.style.scrollBehavior = 'smooth'
 	win.scrollTop = top	
 	let counter = 0
-	let timer = setInterval(() => {
+	clearInterval(timer)
+	timer = setInterval(() => {
 		counter ++
 		let t = Ascroll.topcalc(anchor, conf)
 		if (counter == 4) clearInterval(timer)
