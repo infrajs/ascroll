@@ -81,7 +81,7 @@ let Ascroll = async (conf) => {
 					Ascroll.go('#' + hash, conf)
 				})
 			}
-
+			if (!event.defaultPrevented) event.preventDefault();
 
 			/*if (!href && !event.defaultPrevented) { //Добавляется ли адрес в историю? Кто отменил стандартное действие тот и добавил в историю				
 				event.preventDefault();
