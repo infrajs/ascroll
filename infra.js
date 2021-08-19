@@ -7,7 +7,7 @@ import { DOM } from '/vendor/akiyatkin/load/DOM.js'
 import { CallFrame } from '/vendor/akiyatkin/waitshow/CallFrame.js'
 
 DOM.done('load', href => {
-	let conf = Config.get('ascroll');
+	const conf = Config.get('ascroll');
 	Ascroll(conf);
 })
 
@@ -30,6 +30,7 @@ DOM.done('load', href => {
 // })
 Event.handler('Crumb.onchange', function () {// это native click Crumb, после jquery click ascroll
 	//Нажимаем на ссылку, но Controller.onshow не происходит. Ссылка с якорем
+
 	if (Crumb.popstate) return; //back forward
 	if (Crumb.a && !location.hash) return; //link click
 	//if (!location.hash) return; //link click

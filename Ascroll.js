@@ -5,7 +5,7 @@ import { Event } from '/vendor/infrajs/event/Event.js'
 let Ascroll = async (conf) => {
 	
 	conf = { ...Ascroll.conf, ...conf}
-	
+	Ascroll.conf = conf
 	var div = document.querySelector(conf.div)
 
 	//Чтобы исключить ссылку из обработки скролла нужно добавить атрибут data-Ascroll=false
@@ -124,6 +124,8 @@ Ascroll.topcalc = (anchor, conf) => {
 		} else {
 			var top = 0;
 		}
+	} else if (typeof (anchor) == 'object') { //HTML element
+		var top = anchor.getBoundingClientRect().top + window.pageYOffset
 	} else if (typeof (anchor) == 'number') {
 		var top = anchor;
 	} else {
