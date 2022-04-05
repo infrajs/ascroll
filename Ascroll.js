@@ -36,9 +36,9 @@ let Ascroll = async (conf) => {
 			var anchor = a.dataset.anchor; //Якорь из атрибута
 			let hash = false
 			if (!anchor) {
-				anchor = href.split('#', 2); //Якорь из ссылки
-				anchor = anchor[1];
-				if (anchor) {
+				const r = href.split('#', 2); //Якорь из ссылки
+				if (r.length > 1) {
+					anchor = r[1];
 					hash = anchor
 					href = href[0];
 					var nanchor = Number(anchor);
@@ -75,11 +75,20 @@ let Ascroll = async (conf) => {
 				}); //Даже когда адрес уже открыт скролить мы всё равно должны
 			})*/
 
-			if (hash) {
+			if (hash !== false) {
 				DOM.wait('check').then(() => {
+					if (!event.defaultPrevented) {
+						const old = location.hash;
+						const newhash = hash ? '#' + hash : ''
+						if (newhash == old) {
+							window.dispatchEvent(new HashChangeEvent("hashchange"))
+						}
+						location.hash = newhash
+					}
 					if ('#' + hash != location.hash) return
 					Ascroll.go('#' + hash, conf)
 				})
+				
 			}
 			if (!event.defaultPrevented) event.preventDefault();
 
